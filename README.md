@@ -2,7 +2,8 @@
 
 A homepage for [Fermor](https://www.fermor.in), built for the frontend assignment.
 
-**Live:** _add the deployed URL here_
+**Live:** https://fermor-one.vercel.app  
+**Source:** https://github.com/nawazish2/fermor-homepage
 
 The page is built around one idea: Fermor's real strength is that it shows its working, so the homepage should too. The headline is a sentence you can edit ("If I put ₹10,000 in every month, for 10 years at 12% a year, I'll have ₹23.23 L"), and the answer is the biggest thing on the page.
 
