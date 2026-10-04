@@ -32,7 +32,7 @@ export function Faq() {
   return (
     <Section>
       <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-        <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl">
+        <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl">
           Questions, answered plainly.
         </h2>
         <div className="border-t border-rule">
@@ -46,7 +46,7 @@ export function Faq() {
                     aria-expanded={isOpen}
                     aria-controls={`faq-${i}`}
                     onClick={() => setOpen(isOpen ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 py-5 text-left text-lg font-medium"
+                    className="flex w-full items-center justify-between gap-4 py-5 text-left font-medium"
                   >
                     {f.q}
                     <span aria-hidden="true" className="text-xl text-accent">

@@ -16,9 +16,9 @@ export function FinalCta() {
       data-on-dark
       className="scroll-mt-16 bg-accent text-white"
     >
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-2 lg:items-end">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-2 lg:items-end">
         <div>
-          <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
+          <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl md:text-5xl">
             See the math. Then make the move.
           </h2>
           <p className="mt-5 max-w-md text-white/80">

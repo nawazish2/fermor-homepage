@@ -7,7 +7,7 @@ export function Wordmark({
   plain?: boolean;
 }) {
   return (
-    <span className={`font-display text-2xl ${className}`}>
+    <span className={`font-display text-xl ${className}`}>
       <span className={plain ? "" : "marker px-0.5"}>Fermor</span>
     </span>
   );

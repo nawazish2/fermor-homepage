@@ -20,7 +20,7 @@ export function Portfolio() {
     <Section id="portfolio">
       <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
         <div>
-          <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl">
+          <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl">
             Everything you own, in one honest view.
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-ink-soft">
@@ -29,7 +29,7 @@ export function Portfolio() {
           </p>
           <dl className="mt-8">
             <dt className="text-sm text-ink-soft">Current value</dt>
-            <dd className="font-display text-5xl tabular-nums">
+            <dd className="font-display text-4xl tabular-nums">
               {formatCompactINR(t.current)}
             </dd>
           </dl>

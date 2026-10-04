@@ -42,7 +42,7 @@ export function Calculators() {
 
   return (
     <Section id="calculators">
-      <h2 className="max-w-3xl font-display text-4xl leading-[1.05] sm:text-5xl">
+      <h2 className="max-w-3xl font-display text-3xl leading-[1.1] sm:text-4xl">
         Start with numbers you already know. Change one at a time.
       </h2>
 

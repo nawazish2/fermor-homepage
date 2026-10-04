@@ -42,7 +42,7 @@ export function SipWidget() {
 
   return (
     <div>
-      <h1 className="max-w-4xl font-display text-[clamp(1.8rem,4.2vw,3.25rem)] leading-[1.2]">
+      <h1 className="max-w-4xl font-display text-[clamp(1.5rem,3.2vw,2.5rem)] leading-[1.2]">
         If I put{" "}
         <Marked prefix="₹">
           <NumberField
@@ -90,12 +90,12 @@ export function SipWidget() {
         testId="corpus"
         value={result.corpus}
         format={formatCompactINR}
-        className="mt-3 block font-display text-[clamp(3.75rem,13vw,8.5rem)] leading-none tabular-nums text-accent"
+        className="mt-3 block font-display text-[clamp(3rem,9vw,6rem)] leading-none tabular-nums text-accent"
       />
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-14">
         <div>
-          <p className="max-w-md text-lg leading-relaxed text-ink-soft">
+          <p className="max-w-md leading-relaxed text-ink-soft">
             That&rsquo;s the math behind your money, made visible. Fermor shows
             the working behind every number you invest, track or plan.
           </p>

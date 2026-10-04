@@ -42,7 +42,7 @@ export function AskFermor() {
     <Section id="ask">
       <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
         <div>
-          <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl">
+          <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl">
             Ask a money question. Get the working, not just the answer.
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-ink-soft">

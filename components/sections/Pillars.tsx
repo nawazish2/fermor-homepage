@@ -27,13 +27,13 @@ function Sample({ children }: { children: React.ReactNode }) {
 export function Pillars() {
   return (
     <Section>
-      <h2 className="max-w-3xl font-display text-4xl leading-[1.05] sm:text-5xl">
+      <h2 className="max-w-3xl font-display text-3xl leading-[1.1] sm:text-4xl">
         One place to see your money, move it and grow it.
       </h2>
 
       <div className="mt-14 grid gap-12 md:grid-cols-3 md:gap-8">
         <article>
-          <h3 className="font-display text-3xl">Understand</h3>
+          <h3 className="font-display text-2xl">Understand</h3>
           <p className="mt-3 leading-relaxed text-ink-soft">
             See stocks, mutual funds and ETFs together, and what each one is
             worth against what you put in.
@@ -75,7 +75,7 @@ export function Pillars() {
         </article>
 
         <article>
-          <h3 className="font-display text-3xl">Act</h3>
+          <h3 className="font-display text-2xl">Act</h3>
           <p className="mt-3 leading-relaxed text-ink-soft">
             Start a SIP from ₹500 a month, or buy a stock or ETF. The cost is on
             the screen before you confirm.
@@ -103,7 +103,7 @@ export function Pillars() {
         </article>
 
         <article>
-          <h3 className="font-display text-3xl">Grow</h3>
+          <h3 className="font-display text-2xl">Grow</h3>
           <p className="mt-3 leading-relaxed text-ink-soft">
             Set a goal and see how far you are. Change the amount or the time
             and watch the date move.
