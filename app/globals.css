@@ -58,3 +58,19 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+.fermor-range::-webkit-slider-thumb {
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-paper);
+}
+.fermor-range::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  border: 2px solid var(--color-paper);
+}
