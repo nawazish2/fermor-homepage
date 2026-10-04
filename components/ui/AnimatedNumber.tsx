@@ -16,17 +16,12 @@ export function AnimatedNumber({
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      shownRef.current = value;
-      setShown(value);
-      return;
-    }
     const from = shownRef.current;
     const start = performance.now();
-    const duration = 350;
+    const duration = reduce ? 0 : 350;
     let raf = 0;
     function tick(now: number) {
-      const t = Math.min(1, (now - start) / duration);
+      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
       const next = from + (value - from) * eased;
       shownRef.current = next;

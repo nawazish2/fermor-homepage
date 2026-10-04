@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { clamp } from "@/lib/clamp";
 
 type Props = {
@@ -26,9 +26,8 @@ export function Slider({
   onChange,
 }: Props) {
   const id = useId();
-  const [draft, setDraft] = useState(String(value));
-
-  useEffect(() => setDraft(String(value)), [value]);
+  // Text being typed; null means show the committed value.
+  const [draft, setDraft] = useState<string | null>(null);
 
   function commit(raw: string) {
     setDraft(raw);
@@ -55,9 +54,9 @@ export function Slider({
             min={min}
             max={max}
             step={step}
-            value={draft}
+            value={draft ?? String(value)}
             onChange={(e) => commit(e.target.value)}
-            onBlur={() => setDraft(String(value))}
+            onBlur={() => setDraft(null)}
           />
           {suffix && <span className="text-ink-soft">{suffix}</span>}
         </div>
@@ -69,7 +68,10 @@ export function Slider({
         max={max}
         step={step}
         value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        onChange={(e) => {
+          setDraft(null);
+          onChange(Number(e.target.value));
+        }}
         className="fermor-range mt-3 h-1 w-full cursor-pointer appearance-none bg-rule"
         style={{
           background: `linear-gradient(to right, var(--color-accent) ${pct}%, var(--color-rule) ${pct}%)`,

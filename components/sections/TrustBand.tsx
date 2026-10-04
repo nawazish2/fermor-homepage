@@ -23,7 +23,9 @@ export function TrustBand() {
         {statements.map((s) => (
           <div key={s.title}>
             <h3 className="font-medium">{s.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.body}</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+              {s.body}
+            </p>
           </div>
         ))}
       </div>

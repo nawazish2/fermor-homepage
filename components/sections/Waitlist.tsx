@@ -31,7 +31,9 @@ export function Waitlist() {
       setStatus("done");
     } catch (err) {
       setStatus("idle");
-      setError(err instanceof Error ? err.message : "Something went wrong. Try again.");
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Try again.",
+      );
     }
   }
 

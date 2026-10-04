@@ -74,3 +74,13 @@ body {
   background: var(--color-ink);
   border: 2px solid var(--color-paper);
 }
+
+[data-reveal] {
+  transition:
+    opacity 700ms ease-out,
+    transform 700ms ease-out;
+}
+[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(16px);
+}

@@ -3,7 +3,9 @@ import { Waitlist } from "./Waitlist";
 function Badge({ store, line }: { store: string; line: string }) {
   return (
     <div className="border border-paper/30 px-4 py-2 text-left">
-      <p className="text-[10px] uppercase tracking-widest text-paper/60">{line}</p>
+      <p className="text-[10px] uppercase tracking-widest text-paper/60">
+        {line}
+      </p>
       <p className="text-sm">{store}</p>
     </div>
   );
