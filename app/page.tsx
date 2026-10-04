@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero/Hero";
 import { Pillars } from "@/components/sections/Pillars";
+import { AskFermor } from "@/components/sections/AskFermor";
 import { TrustBand } from "@/components/sections/TrustBand";
 
 export default function Home() {
@@ -7,6 +8,7 @@ export default function Home() {
     <div id="top">
       <Hero />
       <Pillars />
+      <AskFermor />
       <TrustBand />
     </div>
   );
