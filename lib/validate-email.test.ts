@@ -15,3 +15,14 @@ describe("normalizeEmail", () => {
     expect(normalizeEmail(undefined)).toBeNull();
   });
 });
+
+describe("normalizeEmail strictness", () => {
+  it("rejects doubled and trailing dots and one-letter TLDs", () => {
+    expect(normalizeEmail("a@b..com")).toBeNull();
+    expect(normalizeEmail("a@b.c.")).toBeNull();
+    expect(normalizeEmail("a@b.c")).toBeNull();
+  });
+  it("accepts subdomains", () => {
+    expect(normalizeEmail("A@mail.example.co.in")).toBe("a@mail.example.co.in");
+  });
+});

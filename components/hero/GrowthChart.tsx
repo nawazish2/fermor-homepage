@@ -1,9 +1,9 @@
-import { formatCompactINR } from "@/lib/finance/format";
+import { formatAxisINR, formatCompactINR } from "@/lib/finance/format";
 import type { SipPoint } from "@/lib/finance/sip";
 
-const W = 400;
-const H = 240;
-const PAD = { top: 12, right: 8, bottom: 24, left: 52 };
+const W = 460;
+const H = 270;
+const PAD = { top: 14, right: 12, bottom: 28, left: 56 };
 
 export function GrowthChart({ series }: { series: SipPoint[] }) {
   const points = [{ year: 0, invested: 0, corpus: 0 }, ...series];
@@ -26,7 +26,7 @@ export function GrowthChart({ series }: { series: SipPoint[] }) {
     <svg
       viewBox={`0 0 ${W} ${H}`}
       role="img"
-      aria-label={`Growth over ${maxYear} years: invested ${formatCompactINR(last.invested)}, corpus ${formatCompactINR(last.corpus)}`}
+      aria-label={`Growth over ${maxYear} years: invested ${formatCompactINR(last.invested)}, value ${formatCompactINR(last.corpus)}`}
       className="h-auto w-full"
     >
       {gridValues.map((v) => (
@@ -40,14 +40,14 @@ export function GrowthChart({ series }: { series: SipPoint[] }) {
             strokeWidth="1"
           />
           <text
-            x={PAD.left - 6}
-            y={y(v) + 3.5}
+            x={PAD.left - 8}
+            y={y(v) + 4}
             textAnchor="end"
-            fontSize="10"
+            fontSize="12"
             fill="var(--color-ink-soft)"
-            className="font-mono"
+            className="tabular-nums"
           >
-            {formatCompactINR(v).replace("₹", "")}
+            {formatAxisINR(v)}
           </text>
         </g>
       ))}
@@ -55,23 +55,38 @@ export function GrowthChart({ series }: { series: SipPoint[] }) {
         <text
           key={`${t}-${i}`}
           x={x(t)}
-          y={H - 6}
-          textAnchor={i === 0 ? "start" : i === xTicks.length - 1 ? "end" : "middle"}
-          fontSize="10"
+          y={H - 8}
+          textAnchor={
+            i === 0 ? "start" : i === xTicks.length - 1 ? "end" : "middle"
+          }
+          fontSize="12"
           fill="var(--color-ink-soft)"
-          className="font-mono"
+          className="tabular-nums"
         >
-          {t === 0 ? "0" : `${t}y`}
+          {t === 0 ? "Today" : `${t} yr`}
         </text>
       ))}
-      <path d={corpusArea} fill="var(--color-accent-soft)" />
-      <path d={line("corpus")} fill="none" stroke="var(--color-accent)" strokeWidth="2" />
+      <path
+        className="draw-area"
+        d={corpusArea}
+        fill="var(--color-accent-soft)"
+      />
       <path
         d={line("invested")}
         fill="none"
         stroke="var(--color-ink)"
-        strokeWidth="1.5"
-        strokeDasharray="4 3"
+        strokeWidth="1.75"
+        strokeDasharray="5 4"
+      />
+      <path
+        className="draw-line"
+        pathLength={1}
+        d={line("corpus")}
+        fill="none"
+        stroke="var(--color-accent)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

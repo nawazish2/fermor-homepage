@@ -1,36 +1,61 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
+// Writes the tweened text straight into the DOM node so a count-up does not
+// re-render React 60 times a second. The server-rendered text is the real value.
 export function AnimatedNumber({
   value,
   format,
   className,
+  fromZero = false,
+  testId,
 }: {
   value: number;
   format: (n: number) => string;
   className?: string;
+  /** Count up from zero on first paint. */
+  fromZero?: boolean;
+  testId?: string;
 }) {
-  const [shown, setShown] = useState(value);
-  const shownRef = useRef(value);
+  const [initialText] = useState(() => format(value));
+  const ref = useRef<HTMLSpanElement>(null);
+  const shown = useRef(value);
+  const first = useRef(true);
 
-  useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const from = shownRef.current;
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const isFirst = first.current;
+    first.current = false;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const from = isFirst && fromZero ? 0 : shown.current;
+    if (reduce || from === value) {
+      shown.current = value;
+      el.textContent = format(value);
+      return;
+    }
+    shown.current = from;
+    el.textContent = format(from);
     const start = performance.now();
-    const duration = reduce ? 0 : 350;
+    const duration = isFirst ? 1400 : 350;
     let raf = 0;
     function tick(now: number) {
-      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
+      const t = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - t, 3);
-      const next = from + (value - from) * eased;
-      shownRef.current = next;
-      setShown(next);
+      shown.current = from + (value - from) * eased;
+      el!.textContent = format(shown.current);
       if (t < 1) raf = requestAnimationFrame(tick);
     }
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [value]);
+  }, [value, format, fromZero]);
 
-  return <span className={className}>{format(shown)}</span>;
+  return (
+    <span ref={ref} className={className} data-testid={testId}>
+      {initialText}
+    </span>
+  );
 }

@@ -2,7 +2,6 @@
 
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Section } from "@/components/Section";
-import { Reveal } from "@/components/ui/Reveal";
 import { SipCalc } from "@/components/calculators/SipCalc";
 import { EmiCalc } from "@/components/calculators/EmiCalc";
 import { TaxCalc } from "@/components/calculators/TaxCalc";
@@ -41,74 +40,78 @@ export function Calculators() {
     refs.current[next]?.focus();
   }
 
-  const Panel = tabs[active].Panel;
-
   return (
     <Section id="calculators">
-      <Reveal>
-        <p className="text-xs font-medium uppercase tracking-widest text-accent">
-          Calculators
-        </p>
-        <h2 className="mt-4 max-w-2xl font-display text-3xl tracking-tight sm:text-4xl md:text-5xl">
-          Start with numbers you already know. Change one at a time.
-        </h2>
+      <h2 className="max-w-3xl font-display text-4xl leading-[1.05] sm:text-5xl">
+        Start with numbers you already know. Change one at a time.
+      </h2>
 
-        <div
-          role="tablist"
-          aria-label="Calculators"
-          onKeyDown={onKeyDown}
-          className="mt-10 flex gap-6 border-b border-rule"
-        >
-          {tabs.map((t, i) => (
-            <button
-              key={t.id}
-              ref={(el) => {
-                refs.current[i] = el;
-              }}
-              role="tab"
-              id={`tab-${t.id}`}
-              aria-selected={i === active}
-              aria-controls={`panel-${t.id}`}
-              tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
-              className={`-mb-px border-b-2 pb-3 text-sm ${
-                i === active
-                  ? "border-accent text-ink"
-                  : "border-transparent text-ink-soft hover:text-ink"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+      <div
+        role="tablist"
+        aria-label="Calculators"
+        onKeyDown={onKeyDown}
+        className="mt-10 inline-flex gap-1 rounded-full bg-paper-deep p-1"
+      >
+        {tabs.map((t, i) => (
+          <button
+            key={t.id}
+            ref={(el) => {
+              refs.current[i] = el;
+            }}
+            role="tab"
+            id={`tab-${t.id}`}
+            aria-selected={i === active}
+            aria-controls={`panel-${t.id}`}
+            tabIndex={i === active ? 0 : -1}
+            onClick={() => setActive(i)}
+            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+              i === active
+                ? "bg-accent text-white"
+                : "text-ink-soft hover:text-ink"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
 
+      {tabs.map((t, i) => (
         <div
+          key={t.id}
           role="tabpanel"
-          id={`panel-${tabs[active].id}`}
-          aria-labelledby={`tab-${tabs[active].id}`}
+          id={`panel-${t.id}`}
+          aria-labelledby={`tab-${t.id}`}
+          hidden={i !== active}
           className="pt-10"
         >
-          <Panel />
+          <t.Panel />
         </div>
+      ))}
 
-        <div className="mt-14 border-t border-rule pt-6">
-          <p className="text-sm text-ink-soft">
-            And 20+ more, all free, no login:
-          </p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {others.map((o) => (
-              <li key={o}>
-                <a
-                  href="#calculators"
-                  className="block border border-rule px-3 py-1.5 text-sm hover:border-ink"
-                >
-                  {o}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Reveal>
+      <div className="mt-14 border-t border-rule pt-6">
+        <p className="text-sm text-ink-soft">
+          More calculators on{" "}
+          <a
+            href="https://www.fermor.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-accent"
+          >
+            fermor.in
+          </a>
+          , all free and without a login:
+        </p>
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {others.map((o) => (
+            <li
+              key={o}
+              className="rounded-full border border-rule bg-white px-3 py-1.5 text-sm"
+            >
+              {o}
+            </li>
+          ))}
+        </ul>
+      </div>
     </Section>
   );
 }

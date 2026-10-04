@@ -15,14 +15,52 @@ export function EmiCalc() {
   return (
     <div className="grid gap-10 md:grid-cols-2">
       <div className="space-y-6">
-        <Slider label="Loan amount" prefix="₹" value={principal} min={100000} max={50000000} step={100000} onChange={setPrincipal} />
-        <Slider label="Interest rate" suffix="% / yr" value={rate} min={5} max={15} step={0.1} onChange={setRate} />
-        <Slider label="Tenure" suffix="years" value={years} min={1} max={30} step={1} onChange={setYears} />
+        <Slider
+          label="Loan amount"
+          prefix="₹"
+          format={formatINR}
+          value={principal}
+          min={100000}
+          max={50000000}
+          step={100000}
+          onChange={setPrincipal}
+        />
+        <Slider
+          label="Interest rate"
+          suffix="% / yr"
+          format={(v) => `${v}% a year`}
+          value={rate}
+          min={5}
+          max={15}
+          step={0.1}
+          onChange={setRate}
+        />
+        <Slider
+          label="Tenure"
+          suffix="years"
+          format={(v) => `${v} years`}
+          value={years}
+          min={1}
+          max={30}
+          step={1}
+          onChange={setYears}
+        />
       </div>
       <dl className="divide-y divide-rule border-y border-rule self-start">
-        <ResultRow label="Monthly EMI" value={formatINR(Math.round(r.emi))} strong />
-        <ResultRow label="Total interest" value={formatINR(Math.round(r.totalInterest))} tone="loss" />
-        <ResultRow label="Total payable" value={formatINR(Math.round(r.totalPayable))} />
+        <ResultRow
+          label="Monthly EMI"
+          value={formatINR(Math.round(r.emi))}
+          strong
+        />
+        <ResultRow
+          label="Total interest"
+          value={formatINR(Math.round(r.totalInterest))}
+          tone="loss"
+        />
+        <ResultRow
+          label="Total payable"
+          value={formatINR(Math.round(r.totalPayable))}
+        />
       </dl>
     </div>
   );

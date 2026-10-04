@@ -1,34 +1,31 @@
+import { Section } from "@/components/Section";
+
 const statements = [
   {
-    title: "Educational, not advice",
-    body: "Fermor is not a SEBI-registered investment adviser. We show the arithmetic; the decision is yours.",
+    title: "This is not investment advice",
+    body: "Fermor is educational and is not a SEBI-registered investment adviser. We show the arithmetic; the decision is yours.",
   },
   {
-    title: "Runs in your browser",
-    body: "Every calculation happens on your device. Nothing you type is sent anywhere.",
+    title: "Calculators run on your device",
+    body: "The numbers you enter in the calculators never leave your browser.",
   },
   {
-    title: "Your data stays with you",
-    body: "Inputs stay on your device unless you choose to save a result.",
+    title: "We only ask for your email",
+    body: "The waitlist is the only form on this page, and it asks for nothing else.",
   },
 ];
 
 export function TrustBand() {
   return (
-    <section
-      aria-label="How Fermor handles your data"
-      className="border-y border-rule bg-paper-deep"
-    >
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-3 md:gap-12">
+    <Section className="!py-12 md:!py-16">
+      <div className="grid gap-8 border-t border-rule pt-10 md:grid-cols-3 md:gap-12">
         {statements.map((s) => (
           <div key={s.title}>
-            <h3 className="font-medium">{s.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              {s.body}
-            </p>
+            <h3 className="font-display text-xl">{s.title}</h3>
+            <p className="mt-2 leading-relaxed text-ink-soft">{s.body}</p>
           </div>
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

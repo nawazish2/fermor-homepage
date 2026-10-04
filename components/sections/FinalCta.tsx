@@ -2,24 +2,26 @@ import { Waitlist } from "./Waitlist";
 
 function Badge({ store, line }: { store: string; line: string }) {
   return (
-    <div className="border border-paper/30 px-4 py-2 text-left">
-      <p className="text-[10px] uppercase tracking-widest text-paper/60">
-        {line}
-      </p>
-      <p className="text-sm">{store}</p>
+    <div className="rounded-lg border border-white/30 px-4 py-2 text-left">
+      <p className="text-xs text-white/70">{line}</p>
+      <p className="text-sm font-medium">{store}</p>
     </div>
   );
 }
 
 export function FinalCta() {
   return (
-    <section id="waitlist" className="scroll-mt-16 bg-ink text-paper">
+    <section
+      id="waitlist"
+      data-on-dark
+      className="scroll-mt-16 bg-accent text-white"
+    >
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-2 lg:items-end">
         <div>
-          <h2 className="font-display text-4xl tracking-tight sm:text-5xl md:text-6xl">
+          <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
             See the math. Then make the move.
           </h2>
-          <p className="mt-5 max-w-md text-paper/70">
+          <p className="mt-5 max-w-md text-white/80">
             Join the waitlist for early access. We&apos;ll email once, when
             Fermor is ready for you.
           </p>

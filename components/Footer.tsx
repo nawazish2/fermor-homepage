@@ -8,24 +8,22 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer id="about" className="border-t border-rule bg-paper-deep">
+    <footer id="about" data-on-dark className="bg-ink text-paper">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div>
-          <Wordmark />
-          <p className="mt-3 max-w-xs text-sm text-ink-soft">
+          <Wordmark plain />
+          <p className="mt-4 max-w-xs text-sm text-paper/70">
             The math behind your money, made visible. Built for investors in
             India.
           </p>
         </div>
         {columns.map((c) => (
           <div key={c.title}>
-            <h2 className="text-xs font-medium uppercase tracking-widest text-ink-soft">
-              {c.title}
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm">
+            <h2 className="font-medium">{c.title}</h2>
+            <ul className="mt-4 space-y-2 text-sm text-paper/70">
               {c.links.map((l) => (
                 <li key={l}>
-                  <a href="#" className="hover:text-accent">
+                  <a href="#" className="hover:text-paper">
                     {l}
                   </a>
                 </li>
@@ -34,8 +32,8 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="border-t border-rule">
-        <p className="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-ink-soft sm:px-6">
+      <div className="border-t border-paper/15">
+        <p className="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-paper/60 sm:px-6">
           Fermor is educational and is not a SEBI-registered investment adviser.
           Calculators show arithmetic, not advice. Investments in securities
           markets are subject to market risk.

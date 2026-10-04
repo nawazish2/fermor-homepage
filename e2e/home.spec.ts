@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const corpus = (page: import("@playwright/test").Page) =>
-  page.locator("span.font-mono.text-4xl").first();
+  page.locator("[data-testid=corpus]").first();
 
 test("moving the hero years slider changes the corpus", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
@@ -45,4 +45,20 @@ test("content is visible without motion", async ({ browser }) => {
   await heading.scrollIntoViewIfNeeded();
   await expect(heading).toHaveCSS("opacity", "1");
   await ctx.close();
+});
+
+test("typing above the maximum shows the clamped value", async ({ page }) => {
+  await page.goto("/");
+  const field = page.getByLabel("Monthly investment value").first();
+  await field.fill("200000");
+  await expect(field).toHaveValue("100000");
+});
+
+test("mobile menu keeps Close reachable by keyboard", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Menu" }).click();
+  const close = page.getByRole("button", { name: "Close" });
+  await page.keyboard.press("Shift+Tab"); // from the first link back to the toggle
+  await expect(close).toBeFocused();
 });

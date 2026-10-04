@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { normalizeEmail } from "@/lib/validate-email";
 
 type Status = "idle" | "loading" | "done";
@@ -9,6 +9,12 @@ export function Waitlist() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const doneRef = useRef<HTMLParagraphElement>(null);
+
+  // The input unmounts on success; move focus to the confirmation so it is not lost.
+  useEffect(() => {
+    if (status === "done") doneRef.current?.focus();
+  }, [status]);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -41,7 +47,11 @@ export function Waitlist() {
     <form onSubmit={onSubmit} noValidate className="w-full max-w-md">
       <div aria-live="polite">
         {status === "done" ? (
-          <p className="border border-paper/30 px-4 py-3">
+          <p
+            ref={doneRef}
+            tabIndex={-1}
+            className="rounded-lg border border-white/40 px-4 py-3 outline-none"
+          >
             You&apos;re on the list. We&apos;ll write when Fermor opens up.
           </p>
         ) : (
@@ -59,18 +69,18 @@ export function Waitlist() {
                 onChange={(e) => setEmail(e.target.value)}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={error ? "waitlist-error" : undefined}
-                className="min-w-0 flex-1 border border-paper/40 bg-transparent px-4 py-3 text-paper placeholder:text-paper/50 focus:border-paper focus:outline-none"
+                className="min-w-0 flex-1 rounded-lg border border-white/40 bg-white/10 px-4 py-3 text-white placeholder:text-white/60 focus:border-white"
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="bg-paper px-6 py-3 text-sm font-medium text-ink hover:bg-accent-soft disabled:opacity-60"
+                className="rounded-lg bg-white px-6 py-3 text-sm font-medium text-accent hover:bg-accent-soft disabled:opacity-60"
               >
                 {status === "loading" ? "Joining…" : "Join waitlist"}
               </button>
             </div>
             {error && (
-              <p id="waitlist-error" className="mt-2 text-sm text-[#f3b4a6]">
+              <p id="waitlist-error" className="mt-2 text-sm text-[#ffd0c7]">
                 {error}
               </p>
             )}

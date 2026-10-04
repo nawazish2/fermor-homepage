@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatCompactINR, formatINR } from "./format";
+import { formatAxisINR, formatCompactINR, formatINR } from "./format";
 import { sipFutureValue } from "./sip";
 import { emi } from "./emi";
 import { computeTax } from "./tax";
@@ -53,5 +53,37 @@ describe("computeTax", () => {
   it("never returns negative tax", () => {
     expect(computeTax(0, "new").tax).toBe(0);
     expect(computeTax(200000, "old").tax).toBe(0);
+  });
+});
+
+describe("review fixes", () => {
+  it("applies 87A marginal relief just above the new-regime limit", () => {
+    expect(computeTax(1300000, "new")).toEqual({ taxable: 1225000, tax: 26000 });
+    expect(computeTax(1325000, "new")).toEqual({ taxable: 1250000, tax: 52000 });
+  });
+  it("stops marginal relief once the slab tax is lower than the excess", () => {
+    expect(computeTax(1350000, "new")).toEqual({ taxable: 1275000, tax: 74100 });
+  });
+  it("applies marginal relief in the old regime too", () => {
+    expect(computeTax(555000, "old")).toEqual({ taxable: 505000, tax: 5200 });
+  });
+  it("never shows 100 lakh; rolls over to crore", () => {
+    expect(formatCompactINR(9999600)).toBe("₹1.00 Cr");
+    expect(formatCompactINR(99999999)).toBe("₹10.00 Cr");
+    expect(formatCompactINR(99999.6)).toBe("₹1.00 L");
+  });
+  it("returns zeros for a zero-year loan", () => {
+    expect(emi(100000, 8, 0)).toEqual({ emi: 0, totalInterest: 0, totalPayable: 0 });
+  });
+});
+
+describe("formatAxisINR", () => {
+  it("keeps chart axis labels short", () => {
+    expect(formatAxisINR(0)).toBe("0");
+    expect(formatAxisINR(581000)).toBe("5.8 L");
+    expect(formatAxisINR(2323391)).toBe("23 L");
+    expect(formatAxisINR(2336100000)).toBe("234 Cr");
+    expect(formatAxisINR(9999600)).toBe("1.0 Cr");
+    expect(formatAxisINR(4500)).toBe("4,500");
   });
 });

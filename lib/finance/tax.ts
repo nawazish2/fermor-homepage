@@ -1,6 +1,7 @@
 // Slabs for FY 2025-26 (AY 2026-27); Budget 2026 left them unchanged for FY 2026-27.
 // Salaried individual, below 60, no deductions beyond the standard deduction.
-// Marginal relief just above the 87A rebate limit is not modelled.
+// 87A marginal relief is applied: tax above the rebate limit never exceeds
+// the income above that limit.
 
 type Regime = "old" | "new";
 
@@ -40,5 +41,6 @@ export function computeTax(
     if (taxable > lower) tax += (Math.min(taxable, upper) - lower) * rate;
     lower = upper;
   }
+  tax = Math.min(tax, taxable - REBATE_LIMIT[regime]);
   return { taxable, tax: Math.round(tax * (1 + CESS)) };
 }

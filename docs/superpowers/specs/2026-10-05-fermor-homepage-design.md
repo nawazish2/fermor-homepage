@@ -32,17 +32,20 @@ Visual: editorial and calm. Not a teal-gradient fintech template, no phone mocku
 - `app/api/waitlist/route.ts` validates input and returns 200. It stores nothing; the README states this.
 - Mock data is typed and lives in `lib/data/`.
 
-## Visual system
+## Visual system (revised 2026-10-05, supersedes "editorial and calm")
 
-- Colors: warm off-white background, near-black ink, one deep green accent. Muted green/red used only for gains/losses.
-- Type: serif display for headlines (Fraunces or Instrument Serif), Geist or Inter for UI, tabular mono for all figures (JetBrains Mono or Geist Mono).
-- Spacing: strict 8px scale. 1px rules instead of card shadows. No gradients.
-- Motion: number tweening, chart redraw on slider change, scroll reveal. All disabled under `prefers-reduced-motion`.
+Approved in conversation after a design critique: the first build (cream paper, high-contrast serif, tracked all-caps labels, numbered markers) matched common generated-page patterns.
+
+- Concept: the page is a worked calculation on graph paper. The hero headline is an editable sentence.
+- Colors: graph-paper white `#F3F5FA`, ink navy `#101A3A`, ballpoint ultramarine `#2438E0`, highlighter marigold `#FFC93C` (only on editable figures), gain `#0A7A4B`, loss `#BE3427`.
+- Type: Bricolage Grotesque (headlines, big figures), Geist (text and UI), tabular figures for numbers. No serif, no monospace.
+- Shape: small radius on controls, larger on panels, 1px rules, no shadows. No eyebrow labels, no numbered markers.
+- Motion: one load moment (count-up and line draw). No scroll reveals. All off under `prefers-reduced-motion`.
 
 ## Page structure
 
 1. **Nav**: typographic wordmark, Calculators, Ask, About, "Join waitlist". Sheet on mobile.
-2. **Hero**: headline plus live SIP widget. Sliders for monthly amount, years, return. Shows corpus in INR crore/lakh, invested-vs-gains split, and a "show the formula" toggle revealing the working.
+2. **Hero**: the headline is an editable sentence (monthly amount, years, return) with the result as the largest element, a growth chart, sliders, and a "show the working" toggle.
 3. **Understand / Act / Grow**: three columns, each mapped to a product capability.
 4. **Ask Fermor**: scripted chat demo ("Can I afford a 60L home loan?") with the working shown inline.
 5. **Calculators**: tabs for SIP, EMI, Tax regime, each a working mini-calculator. Link grid for the remaining tools.

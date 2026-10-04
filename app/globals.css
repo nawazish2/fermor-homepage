@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --color-paper: #f6f2ea;
-  --color-paper-deep: #ede7da;
-  --color-ink: #16150f;
-  --color-ink-soft: #55524a;
-  --color-accent: #1f4d3a;
-  --color-accent-soft: #d5e2da;
-  --color-gain: #2f7a4d;
-  --color-loss: #b0432f;
-  --color-rule: #d8d1c0;
+  --color-paper: #f3f5fa;
+  --color-paper-deep: #e6eaf5;
+  --color-ink: #101a3a;
+  --color-ink-soft: #4a5272;
+  --color-accent: #2438e0;
+  --color-accent-soft: #dce1fb;
+  --color-mark: #ffc93c;
+  --color-gain: #0a7a4b;
+  --color-loss: #be3427;
+  --color-rule: #d3d9eb;
+  --focus-ring: var(--color-accent);
 }
 
 @theme inline {
@@ -19,12 +21,44 @@
   --color-ink-soft: var(--color-ink-soft);
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
+  --color-mark: var(--color-mark);
   --color-gain: var(--color-gain);
   --color-loss: var(--color-loss);
   --color-rule: var(--color-rule);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-bricolage);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+}
+
+@layer components {
+  .font-display {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  /* Worksheet backdrop: used where the page is "doing a sum". */
+  .graph-paper {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--color-rule) 60%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-rule) 60%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+  }
+  /* Highlighter stroke behind a figure the reader can change. */
+  .marker {
+    background-image: linear-gradient(
+      transparent 52%,
+      var(--color-mark) 52%,
+      var(--color-mark) 92%,
+      transparent 92%
+    );
+  }
 }
 
 html {
@@ -39,12 +73,55 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: var(--color-paper);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+[data-on-dark] {
+  --focus-ring: #fff;
+}
+
+.fermor-range::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+.fermor-range::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+/* The one load-time moment: the growth line draws itself. */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.4s ease-out 0.2s forwards;
+}
+.draw-area {
+  opacity: 0;
+  animation: fade-in 0.8s ease-out 1s forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -55,32 +132,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-.fermor-range::-webkit-slider-thumb {
-  appearance: none;
-  height: 18px;
-  width: 18px;
-  border-radius: 9999px;
-  background: var(--color-ink);
-  border: 2px solid var(--color-paper);
-}
-.fermor-range::-moz-range-thumb {
-  height: 16px;
-  width: 16px;
-  border-radius: 9999px;
-  background: var(--color-ink);
-  border: 2px solid var(--color-paper);
-}
-
-[data-reveal] {
-  transition:
-    opacity 700ms ease-out,
-    transform 700ms ease-out;
-}
-[data-reveal="hidden"] {
-  opacity: 0;
-  transform: translateY(16px);
 }

@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import { Wordmark } from "./Wordmark";
 
 const links = [
-  { href: "#calculators", label: "Calculators" },
   { href: "#ask", label: "Ask" },
-  { href: "#about", label: "About" },
+  { href: "#calculators", label: "Calculators" },
+  { href: "#portfolio", label: "Portfolio" },
 ];
 
 export function Nav() {
@@ -16,9 +16,14 @@ export function Nav() {
 
   useEffect(() => {
     if (!open) return;
-    const sheet = sheetRef.current;
-    const focusables = sheet?.querySelectorAll<HTMLElement>("a, button");
-    focusables?.[0]?.focus();
+    const sheetLinks = Array.from(
+      sheetRef.current?.querySelectorAll<HTMLElement>("a") ?? [],
+    );
+    // The toggle sits outside the sheet but is part of the trap, so Close stays reachable.
+    const stops = [toggleRef.current, ...sheetLinks].filter(
+      (el): el is HTMLElement => el !== null,
+    );
+    sheetLinks[0]?.focus();
 
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -26,9 +31,9 @@ export function Nav() {
         toggleRef.current?.focus();
         return;
       }
-      if (e.key !== "Tab" || !focusables?.length) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
+      if (e.key !== "Tab" || stops.length === 0) return;
+      const first = stops[0];
+      const last = stops[stops.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -42,7 +47,7 @@ export function Nav() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-rule bg-paper/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-rule bg-paper/90 backdrop-blur-sm">
       <nav
         aria-label="Primary"
         className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6"
@@ -62,7 +67,7 @@ export function Nav() {
           <li>
             <a
               href="#waitlist"
-              className="bg-ink px-4 py-2 text-paper hover:bg-accent"
+              className="rounded-lg bg-accent px-4 py-2 font-medium text-white hover:bg-ink"
             >
               Join waitlist
             </a>
@@ -72,7 +77,7 @@ export function Nav() {
         <button
           ref={toggleRef}
           type="button"
-          className="-mr-2 p-2 text-sm md:hidden"
+          className="-mr-2 rounded-lg p-2 text-sm font-medium md:hidden"
           aria-expanded={open}
           aria-controls="mobile-sheet"
           onClick={() => setOpen((v) => !v)}

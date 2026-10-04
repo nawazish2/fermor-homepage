@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Section } from "@/components/Section";
-import { Reveal } from "@/components/ui/Reveal";
 
 const faqs = [
   {
@@ -19,7 +18,7 @@ const faqs = [
   },
   {
     q: "What happens to the numbers I enter?",
-    a: "Calculations run in your browser. Your inputs stay on your device unless you choose to save a result.",
+    a: "The calculators run in your browser, and the numbers you enter never leave your device. The only thing we collect is the email you give the waitlist.",
   },
   {
     q: "How do I get started?",
@@ -32,44 +31,39 @@ export function Faq() {
 
   return (
     <Section>
-      <Reveal>
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
-          <h2 className="font-display text-3xl tracking-tight sm:text-4xl md:text-5xl">
-            Questions, answered plainly.
-          </h2>
-          <div className="border-t border-rule">
-            {faqs.map((f, i) => {
-              const isOpen = open === i;
-              return (
-                <div key={f.q} className="border-b border-rule">
-                  <h3>
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      aria-controls={`faq-${i}`}
-                      onClick={() => setOpen(isOpen ? null : i)}
-                      className="flex w-full items-center justify-between gap-4 py-5 text-left text-lg"
-                    >
-                      {f.q}
-                      <span
-                        aria-hidden="true"
-                        className="font-mono text-accent"
-                      >
-                        {isOpen ? "−" : "+"}
-                      </span>
-                    </button>
-                  </h3>
-                  <div id={`faq-${i}`} hidden={!isOpen}>
-                    <p className="max-w-xl pb-5 leading-relaxed text-ink-soft">
-                      {f.a}
-                    </p>
-                  </div>
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <h2 className="font-display text-4xl leading-[1.05] sm:text-5xl">
+          Questions, answered plainly.
+        </h2>
+        <div className="border-t border-rule">
+          {faqs.map((f, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={f.q} className="border-b border-rule">
+                <h3>
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-${i}`}
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="flex w-full items-center justify-between gap-4 py-5 text-left text-lg font-medium"
+                  >
+                    {f.q}
+                    <span aria-hidden="true" className="text-xl text-accent">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+                </h3>
+                <div id={`faq-${i}`} hidden={!isOpen}>
+                  <p className="max-w-xl pb-5 leading-relaxed text-ink-soft">
+                    {f.a}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-      </Reveal>
+      </div>
     </Section>
   );
 }
