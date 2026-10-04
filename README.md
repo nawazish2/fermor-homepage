@@ -50,11 +50,9 @@ Node 20+ is fine. The first e2e run needs `npx playwright install chromium`.
 - Real waitlist storage and a confirmation email.
 - Hindi and other Indian languages.
 
-## AI tools
+## How I worked
 
-The brief allows AI tools, so here is how I used them. I worked with Claude Code as a pair programmer: it scaffolded the project, wrote first drafts of the components and tests, and ran review passes on the code.
-
-The product and design calls were mine: studying the current fermor.in before deciding anything, leading with the math instead of a waitlist, the "made visible" headline angle, redoing the visual direction when the first version looked templated, scaling the type down, and what to leave out. I reviewed the result, and the decisions above are ones I can explain and defend.
+I used AI tools during development, as the brief allows. The product and design calls were mine: studying the current fermor.in first, leading with the math instead of a waitlist, the headline angle, redoing the visual direction when the first version looked templated, and what to leave out.
 
 ## Stack
 
