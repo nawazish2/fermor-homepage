@@ -5,6 +5,8 @@ A homepage for [Fermor](https://www.fermor.in), built for the frontend assignmen
 **Live:** https://fermor-one.vercel.app  
 **Source:** https://github.com/nawazish2/fermor-homepage
 
+![The Fermor homepage hero: an editable sentence that computes a SIP's future value](docs/screenshot.png)
+
 The page is built around one idea: Fermor's real strength is that it shows its working, so the homepage should too. The headline is a sentence you can edit ("If I put ₹10,000 in every month, for 10 years at 12% a year, I'll have ₹23.23 L"), and the answer is the biggest thing on the page.
 
 ## Run it
@@ -24,7 +26,7 @@ Node 20+ is fine. The first e2e run needs `npx playwright install chromium`.
 1. **Hero:** a sentence calculator. The highlighted figures are inputs; the result counts up on load and the chart draws itself. "Show the working" prints the formula with your numbers substituted.
 2. **Understand / Act / Grow:** Fermor's own framing, each shown with a small piece of product UI (holdings split, a SIP order, a goal) instead of icons.
 3. **Ask Fermor:** a scripted demo. Each reply lists the figures it used before giving the answer.
-4. **Calculators:** working SIP, EMI and old-vs-new tax regime calculators.
+4. **Calculators:** a goal planner (how much a month to reach an amount), an EMI calculator and an old-vs-new tax regime comparison. SIP is left to the hero so nothing repeats.
 5. **Portfolio:** a mock holdings view. Totals are computed from the data.
 6. **Trust, FAQ, waitlist.**
 
@@ -36,8 +38,21 @@ Node 20+ is fine. The first e2e run needs `npx playwright install chromium`.
 - **Finance functions are plain, tested code** (`lib/finance/`). A wrong number on a finance homepage costs more than an ugly layout, so the SIP, EMI and tax maths have unit tests, including 0% rates and the 87A rebate edge.
 - **Tax slabs** are FY 2025-26 (old and new regime, salaried, standard deduction only, 4% cess), including the 87A rebate and marginal relief just above the rebate limit. Budget 2026 left the slabs unchanged for FY 2026-27.
 - **The waitlist API is a stub.** `/api/waitlist` validates the email and returns 200. It stores nothing; there is no database in this project.
-- **Mock data:** the portfolio, the Ask replies and the app-store badges are illustrative. The wordmark is typographic because I don't have Fermor's logo files.
+- **Mock data:** the portfolio, the Ask replies and the app-store badges are illustrative. The wordmark and icon are typographic because I don't have Fermor's logo files.
+- **Details:** Indian digit grouping in every input (₹10,000, not ₹10000), arrow keys step the inline figures, a generated link-preview image, a 404 page, and footer links that go to real fermor.in pages.
+- **What I left out:** the Market feed and For Kids. They'd make the page longer without making it clearer what Fermor is, and I didn't want to invent user counts or other social proof.
 - **Motion** is one moment: the hero number counts up and the chart line draws. Everything else responds only to your input. It is all off under `prefers-reduced-motion`, and content is visible without JavaScript.
+
+## What I'd do next
+
+- Hook Ask up to a real model, grounded in the user's own numbers, with the working still shown.
+- A goal flow that carries the hero's numbers into an actual SIP setup.
+- Real waitlist storage and a confirmation email.
+- Hindi and other Indian languages.
+
+## AI tools
+
+I used Claude Code while building this, for scaffolding, tests and review passes.
 
 ## Stack
 

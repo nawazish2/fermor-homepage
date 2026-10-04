@@ -1,15 +1,31 @@
 import { Wordmark } from "./Wordmark";
 
 const columns = [
-  { title: "Product", links: ["Market", "Portfolio", "Ask", "Calculators"] },
-  { title: "Company", links: ["About", "Contact", "Blog"] },
-  { title: "Legal", links: ["Privacy policy", "Terms of use", "Disclosures"] },
+  {
+    title: "On this page",
+    links: [
+      { label: "Ask Fermor", href: "#ask" },
+      { label: "Calculators", href: "#calculators" },
+      { label: "Portfolio", href: "#portfolio" },
+      { label: "Join the waitlist", href: "#waitlist" },
+    ],
+  },
+  {
+    title: "Fermor",
+    links: [
+      { label: "About", href: "https://www.fermor.in/about" },
+      { label: "All calculators", href: "https://www.fermor.in/calculators" },
+      { label: "Blog", href: "https://www.fermor.in/blogs" },
+      { label: "Contact", href: "https://www.fermor.in/contact" },
+      { label: "Terms of use", href: "https://www.fermor.in/terms" },
+    ],
+  },
 ];
 
 export function Footer() {
   return (
     <footer id="about" data-on-dark className="bg-ink text-paper">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[2fr_1fr_1fr]">
         <div>
           <Wordmark plain />
           <p className="mt-4 max-w-xs text-sm text-paper/70">
@@ -22,9 +38,15 @@ export function Footer() {
             <h2 className="font-medium">{c.title}</h2>
             <ul className="mt-4 space-y-2 text-sm text-paper/70">
               {c.links.map((l) => (
-                <li key={l}>
-                  <a href="#" className="hover:text-paper">
-                    {l}
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    className="hover:text-paper"
+                    {...(l.href.startsWith("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {l.label}
                   </a>
                 </li>
               ))}

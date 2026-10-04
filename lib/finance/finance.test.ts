@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { formatAxisINR, formatCompactINR, formatINR } from "./format";
-import { sipFutureValue } from "./sip";
+import { formatAxisINR, formatCompactINR, formatINR, formatNumberIN } from "./format";
+import { sipCurve, sipFutureValue } from "./sip";
+import { monthlyForGoal } from "./goal";
 import { emi } from "./emi";
 import { computeTax } from "./tax";
 
@@ -85,5 +86,40 @@ describe("formatAxisINR", () => {
     expect(formatAxisINR(2336100000)).toBe("234 Cr");
     expect(formatAxisINR(9999600)).toBe("1.0 Cr");
     expect(formatAxisINR(4500)).toBe("4,500");
+  });
+});
+
+describe("formatNumberIN", () => {
+  it("groups digits the Indian way without a currency sign", () => {
+    expect(formatNumberIN(10000)).toBe("10,000");
+    expect(formatNumberIN(1234567)).toBe("12,34,567");
+    expect(formatNumberIN(12.5)).toBe("12.5");
+  });
+});
+
+describe("monthlyForGoal", () => {
+  it("is the inverse of the SIP formula", () => {
+    const m = monthlyForGoal(2000000, 5, 12);
+    expect(sipFutureValue(m, 5, 12).corpus).toBeCloseTo(2000000, 2);
+    expect(Math.round(m)).toBe(24246);
+  });
+  it("splits the target evenly at 0% return", () => {
+    expect(monthlyForGoal(1200000, 10, 0)).toBe(10000);
+  });
+  it("returns 0 for a zero-year goal", () => {
+    expect(monthlyForGoal(1000000, 0, 12)).toBe(0);
+  });
+});
+
+describe("sipCurve", () => {
+  it("samples a fixed number of points from today to the end", () => {
+    const c = sipCurve(10000, 10, 12, 24);
+    expect(c).toHaveLength(25);
+    expect(c[0]).toEqual({ t: 0, invested: 0, corpus: 0 });
+    expect(c[24].t).toBe(10);
+    expect(c[24].corpus).toBeCloseTo(sipFutureValue(10000, 10, 12).corpus, 5);
+  });
+  it("keeps the same length when the years change", () => {
+    expect(sipCurve(10000, 3, 12, 24)).toHaveLength(25);
   });
 });

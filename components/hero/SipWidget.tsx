@@ -5,7 +5,7 @@ import { NumberField } from "@/components/ui/NumberField";
 import { Slider } from "@/components/ui/Slider";
 import { AnimatedNumber } from "@/components/ui/AnimatedNumber";
 import { GrowthChart } from "./GrowthChart";
-import { sipFutureValue } from "@/lib/finance/sip";
+import { sipCurve, sipFutureValue } from "@/lib/finance/sip";
 import { formatCompactINR, formatINR } from "@/lib/finance/format";
 
 /** A figure inside the sentence that the reader can edit. */
@@ -37,6 +37,10 @@ export function SipWidget() {
 
   const result = useMemo(
     () => sipFutureValue(monthly, years, rate),
+    [monthly, years, rate],
+  );
+  const curve = useMemo(
+    () => sipCurve(monthly, years, rate),
     [monthly, years, rate],
   );
 
@@ -95,9 +99,11 @@ export function SipWidget() {
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-start lg:gap-14">
         <div>
-          <p className="max-w-md leading-relaxed text-ink-soft">
-            That&rsquo;s the math behind your money, made visible. Fermor shows
-            the working behind every number you invest, track or plan.
+          <p className="max-w-xl text-lg leading-relaxed">
+            Fermor is where people in India invest, track and plan their money,
+            with the working shown at every step. Whether it&rsquo;s a first
+            ₹500 SIP or a ₹50 lakh portfolio, you see the numbers before you
+            decide.
           </p>
 
           <dl className="mt-6 flex gap-10 text-sm">
@@ -189,7 +195,7 @@ export function SipWidget() {
         </div>
 
         <div className="rounded-2xl border border-rule bg-white p-4 sm:p-6">
-          <GrowthChart series={result.series} />
+          <GrowthChart points={curve} />
           <p className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-ink-soft">
             <span className="flex items-center gap-2">
               <span className="inline-block h-0.5 w-5 rounded bg-accent" />{" "}

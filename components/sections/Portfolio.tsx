@@ -2,6 +2,8 @@ import { Section } from "@/components/Section";
 import { holdings, portfolioTotals } from "@/lib/data/portfolio";
 import { formatCompactINR, formatINR } from "@/lib/finance/format";
 
+const MOBILE_ROWS = 4;
+
 function pct(n: number) {
   return `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
 }
@@ -62,11 +64,13 @@ export function Portfolio() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((r) => (
+              {rows.map((r, i) => (
                 <tr
                   key={r.name}
                   role="row"
-                  className="block border-b border-rule py-4 last:border-b-0 sm:table-row sm:py-0"
+                  className={`border-b border-rule py-4 last:border-b-0 sm:table-row sm:py-0 ${
+                    i < MOBILE_ROWS ? "block" : "hidden"
+                  }`}
                 >
                   <td role="cell" className="block sm:table-cell sm:py-4">
                     <span className="block font-medium">{r.name}</span>
@@ -112,6 +116,9 @@ export function Portfolio() {
               ))}
             </tbody>
           </table>
+          <p className="border-t border-rule py-3 text-sm text-ink-soft sm:hidden">
+            + {rows.length - MOBILE_ROWS} more holdings
+          </p>
         </div>
       </div>
     </Section>

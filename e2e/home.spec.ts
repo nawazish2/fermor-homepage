@@ -32,7 +32,7 @@ test("no horizontal scroll at 375px", async ({ page }) => {
 
 test("calculator tabs respond to ArrowRight", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("tab", { name: "SIP" }).focus();
+  await page.getByRole("tab", { name: "Goal" }).focus();
   await page.keyboard.press("ArrowRight");
   await expect(page.getByRole("tab", { name: "EMI" })).toHaveAttribute("aria-selected", "true");
 });
@@ -51,7 +51,7 @@ test("typing above the maximum shows the clamped value", async ({ page }) => {
   await page.goto("/");
   const field = page.getByLabel("Monthly investment value").first();
   await field.fill("200000");
-  await expect(field).toHaveValue("100000");
+  await expect(field).toHaveValue("1,00,000");
 });
 
 test("mobile menu keeps Close reachable by keyboard", async ({ page }) => {
@@ -61,4 +61,18 @@ test("mobile menu keeps Close reachable by keyboard", async ({ page }) => {
   const close = page.getByRole("button", { name: "Close" });
   await page.keyboard.press("Shift+Tab"); // from the first link back to the toggle
   await expect(close).toBeFocused();
+});
+
+test("hero chart redraws when the years change", async ({ page }) => {
+  await page.goto("/");
+  const chart = page.getByRole("img", { name: /Growth over/ });
+  await expect(chart).toHaveAttribute("aria-label", /10 years/);
+  await page.getByLabel("Years value").fill("20");
+  await expect(chart).toHaveAttribute("aria-label", /20 years/);
+});
+
+test("unknown pages show the 404 page", async ({ page }) => {
+  const res = await page.goto("/nope");
+  expect(res?.status()).toBe(404);
+  await expect(page.getByRole("link", { name: "Go to the homepage" })).toBeVisible();
 });

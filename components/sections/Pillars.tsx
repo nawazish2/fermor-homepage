@@ -65,8 +65,10 @@ export function Pillars() {
                         : "ETFs"}
                   </span>
                   <span className="tabular-nums">
-                    {formatCompactINR(t.value)} ·{" "}
-                    {Math.round((t.value / total) * 100)}%
+                    {formatCompactINR(t.value)}
+                    <span className="ml-3 inline-block w-9 text-right text-ink-soft">
+                      {Math.round((t.value / total) * 100)}%
+                    </span>
                   </span>
                 </li>
               ))}

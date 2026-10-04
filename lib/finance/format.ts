@@ -27,3 +27,10 @@ export function formatAxisINR(n: number): string {
   if (lakh >= 1) return `${lakh >= 10 ? Math.round(lakh) : lakh.toFixed(1)} L`;
   return grouped.format(abs);
 }
+
+const groupedFraction = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
+
+/** "10,000" — Indian digit grouping, no currency sign. */
+export function formatNumberIN(n: number): string {
+  return groupedFraction.format(n);
+}

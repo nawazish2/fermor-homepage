@@ -2,31 +2,32 @@
 
 import { useState } from "react";
 import { Slider } from "@/components/ui/Slider";
-import { sipFutureValue } from "@/lib/finance/sip";
-import { formatCompactINR, formatINR } from "@/lib/finance/format";
+import { monthlyForGoal } from "@/lib/finance/goal";
+import { formatINR } from "@/lib/finance/format";
 import { ResultRow } from "./ResultRow";
 
-export function SipCalc() {
-  const [monthly, setMonthly] = useState(5000);
-  const [years, setYears] = useState(15);
+export function GoalCalc() {
+  const [target, setTarget] = useState(2000000);
+  const [years, setYears] = useState(5);
   const [rate, setRate] = useState(12);
-  const r = sipFutureValue(monthly, years, rate);
+  const monthly = monthlyForGoal(target, years, rate);
+  const putIn = monthly * years * 12;
 
   return (
     <div className="grid gap-10 md:grid-cols-2">
       <div className="space-y-6">
         <Slider
-          label="Monthly investment"
+          label="Goal amount"
           prefix="₹"
           format={formatINR}
-          value={monthly}
-          min={500}
-          max={100000}
-          step={500}
-          onChange={setMonthly}
+          value={target}
+          min={100000}
+          max={50000000}
+          step={100000}
+          onChange={setTarget}
         />
         <Slider
-          label="Time period"
+          label="Reach it in"
           suffix="years"
           format={(v) => `${v} years`}
           value={years}
@@ -49,22 +50,20 @@ export function SipCalc() {
       <div className="self-start">
         <dl className="divide-y divide-rule border-y border-rule">
           <ResultRow
-            label="Invested"
-            value={formatINR(Math.round(r.invested))}
-          />
-          <ResultRow
-            label="Gains"
-            value={`+${formatINR(Math.round(r.gains))}`}
-            tone="gain"
-          />
-          <ResultRow
-            label="Future value"
-            value={formatINR(Math.round(r.corpus))}
+            label="Invest every month"
+            value={formatINR(Math.round(monthly))}
             strong
+          />
+          <ResultRow label="You put in" value={formatINR(Math.round(putIn))} />
+          <ResultRow
+            label="Growth adds"
+            value={`+${formatINR(Math.round(target - putIn))}`}
+            tone="gain"
           />
         </dl>
         <p className="mt-3 text-xs text-ink-soft">
-          About {formatCompactINR(r.corpus)}, with monthly compounding.
+          A monthly SIP at a steady {rate}% a year, compounded monthly. Real
+          returns move around year to year.
         </p>
       </div>
     </div>

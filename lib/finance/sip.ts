@@ -24,3 +24,26 @@ export function sipFutureValue(
   }
   return { invested, corpus, gains: corpus - invested, series };
 }
+
+export type CurvePoint = { t: number; invested: number; corpus: number };
+
+/**
+ * Evenly spaced points from today to `years`. The length depends only on
+ * `samples`, so a chart can tween between curves when the years change.
+ */
+export function sipCurve(
+  monthly: number,
+  years: number,
+  annualReturnPct: number,
+  samples = 24,
+): CurvePoint[] {
+  return Array.from({ length: samples + 1 }, (_, i) => {
+    const t = (years * i) / samples;
+    const months = Math.round(t * 12);
+    return {
+      t,
+      invested: monthly * months,
+      corpus: corpusAfter(monthly, months, annualReturnPct),
+    };
+  });
+}

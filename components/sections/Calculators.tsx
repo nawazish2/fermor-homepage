@@ -2,12 +2,12 @@
 
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Section } from "@/components/Section";
-import { SipCalc } from "@/components/calculators/SipCalc";
+import { GoalCalc } from "@/components/calculators/GoalCalc";
 import { EmiCalc } from "@/components/calculators/EmiCalc";
 import { TaxCalc } from "@/components/calculators/TaxCalc";
 
 const tabs = [
-  { id: "sip", label: "SIP", Panel: SipCalc },
+  { id: "goal", label: "Goal", Panel: GoalCalc },
   { id: "emi", label: "EMI", Panel: EmiCalc },
   { id: "tax", label: "Tax regime", Panel: TaxCalc },
 ] as const;

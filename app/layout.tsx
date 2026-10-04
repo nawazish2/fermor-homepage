@@ -14,10 +14,22 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const description =
+  "Invest, track and plan your money with the working shown. Free calculators for SIPs, loans, goals and tax, built for investors in India.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fermor-one.vercel.app"),
   title: "Fermor: the math behind your money, made visible",
-  description:
-    "Invest, track and plan with the working shown. Free calculators, clear numbers, no hidden arithmetic.",
+  description,
+  openGraph: {
+    title: "Fermor: the math behind your money, made visible",
+    description,
+    url: "/",
+    siteName: "Fermor",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

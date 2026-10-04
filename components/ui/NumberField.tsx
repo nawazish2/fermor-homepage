@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { snap } from "@/lib/clamp";
+import { formatNumberIN } from "@/lib/finance/format";
 
 type Props = {
   value: number;
@@ -25,33 +26,42 @@ export function NumberField({
   className = "",
   autoWidth,
 }: Props) {
-  // Text being typed; null means show the committed value.
+  // Text being typed; null means show the committed value, grouped ("10,000").
   const [draft, setDraft] = useState<string | null>(null);
 
   function handle(raw: string) {
-    const n = Number(raw);
-    if (raw.trim() === "" || !Number.isFinite(n)) {
+    const cleaned = raw.replace(/,/g, "").trim();
+    const n = Number(cleaned);
+    if (cleaned === "" || !Number.isFinite(n)) {
       setDraft(raw);
       return;
     }
-    setDraft(n > max ? String(max) : raw);
+    setDraft(n > max ? formatNumberIN(max) : raw);
     onChange(snap(n, min, max, step));
   }
 
-  const shown = draft ?? String(value);
+  function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+    e.preventDefault();
+    setDraft(null);
+    onChange(
+      snap(value + (e.key === "ArrowUp" ? step : -step), min, max, step),
+    );
+  }
+
+  const shown = draft ?? formatNumberIN(value);
 
   const input = (
     <input
-      type="number"
+      type="text"
       inputMode="decimal"
+      autoComplete="off"
       aria-label={label}
-      min={min}
-      max={max}
-      step={step}
       value={shown}
       onChange={(e) => handle(e.target.value)}
+      onKeyDown={onKeyDown}
       onBlur={() => setDraft(null)}
-      className={`bg-transparent outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none ${
+      className={`bg-transparent outline-none ${
         autoWidth ? "absolute inset-0 w-full" : ""
       } ${className}`}
     />

@@ -39,66 +39,68 @@ export function AskFermor() {
   }
 
   return (
-    <Section id="ask">
-      <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
-        <div>
-          <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl">
-            Ask a money question. Get the working, not just the answer.
-          </h2>
-          <p className="mt-5 max-w-md leading-relaxed text-ink-soft">
-            Every reply lists the numbers it used, so you can check the
-            arithmetic yourself. This is a scripted demo of how Ask will
-            respond.
-          </p>
-          <ul className="mt-8 space-y-2">
-            {askScript.map((e) => (
-              <li key={e.id}>
-                <button
-                  type="button"
-                  onClick={() => play(e.id)}
-                  aria-pressed={e.id === activeId}
-                  className={`w-full rounded-xl border px-4 py-3 text-left text-sm transition-colors ${
-                    e.id === activeId
-                      ? "border-accent bg-accent text-white"
-                      : "border-rule bg-white hover:border-accent"
-                  }`}
-                >
-                  {e.question}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div
-          className="graph-paper rounded-2xl border border-rule p-5 sm:p-7"
-          aria-live="polite"
-        >
-          <div className="ml-auto w-fit max-w-[90%] rounded-2xl rounded-br-sm bg-accent px-4 py-3 text-sm text-white">
-            {active.question}
-          </div>
-
-          <div className="mt-6 min-h-72 rounded-xl bg-white/90 p-4 sm:p-5">
-            <p className="font-medium">Working</p>
-            <dl className="mt-3 divide-y divide-dashed divide-rule border-y border-dashed border-rule">
-              {active.steps.map((s, i) =>
-                i < shown ? (
-                  <div
-                    key={s.label}
-                    className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3 text-sm"
+    <div className="graph-paper border-y border-rule">
+      <Section id="ask">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+          <div>
+            <h2 className="font-display text-3xl leading-[1.1] sm:text-4xl">
+              Ask a money question. Get the working, not just the answer.
+            </h2>
+            <p className="mt-5 max-w-md leading-relaxed text-ink-soft">
+              Every reply lists the numbers it used, so you can check the
+              arithmetic yourself. This is a scripted demo of how Ask will
+              respond.
+            </p>
+            <ul className="mt-8 space-y-2">
+              {askScript.map((e) => (
+                <li key={e.id}>
+                  <button
+                    type="button"
+                    onClick={() => play(e.id)}
+                    aria-pressed={e.id === activeId}
+                    className={`w-full rounded-xl border px-4 py-3 text-left text-sm transition-colors ${
+                      e.id === activeId
+                        ? "border-accent bg-accent text-white"
+                        : "border-rule bg-white hover:border-accent"
+                    }`}
                   >
-                    <dt className="text-ink-soft">{s.label}</dt>
-                    <dd className="font-medium tabular-nums">{s.value}</dd>
-                  </div>
-                ) : null,
+                    {e.question}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div
+            className="rounded-2xl border border-rule bg-white p-5 sm:p-7"
+            aria-live="polite"
+          >
+            <div className="ml-auto w-fit max-w-[90%] rounded-2xl rounded-br-sm bg-accent px-4 py-3 text-sm text-white">
+              {active.question}
+            </div>
+
+            <div className="mt-6 min-h-72">
+              <p className="font-medium">Working</p>
+              <dl className="mt-3 divide-y divide-dashed divide-rule border-y border-dashed border-rule">
+                {active.steps.map((s, i) =>
+                  i < shown ? (
+                    <div
+                      key={s.label}
+                      className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3 text-sm"
+                    >
+                      <dt className="text-ink-soft">{s.label}</dt>
+                      <dd className="font-medium tabular-nums">{s.value}</dd>
+                    </div>
+                  ) : null,
+                )}
+              </dl>
+              {shown >= total && (
+                <p className="mt-5 leading-relaxed">{active.answer}</p>
               )}
-            </dl>
-            {shown >= total && (
-              <p className="mt-5 leading-relaxed">{active.answer}</p>
-            )}
+            </div>
           </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </div>
   );
 }
